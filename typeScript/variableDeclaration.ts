@@ -334,4 +334,4 @@ let defaults = {
     ambiance:'noisy'
 };
 let search = {...defaults,food:"rich"};
-console.log(`search = ${JSON.stringify(search)}`);
+console.log(`search = ${JSON.stringify(search)}`); //search = {"food":"rich","price":"$$","ambiance":"noisy"}
