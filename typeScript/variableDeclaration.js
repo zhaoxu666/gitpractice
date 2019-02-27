@@ -1,4 +1,25 @@
 //变量声明
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+var _a, _b;
 //var 声明
 function f() {
     var message = "Hello,World";
@@ -193,5 +214,79 @@ kitty.numLives--;
 //解构数组
 var input = [1, 2];
 var first = input[0], second = input[1];
-console.log(first);
-console.log(second);
+console.log(first); //1
+console.log(second); //2
+//这创建了2个命名变量 first 和 second。 相当于使用了索引，但更为方便：
+first = input[0];
+second = input[1];
+//解构作用于已声明的变量会更好：
+_a = [second, first], first = _a[0], second = _a[1];
+console.log("first : " + first + ",second : " + second); //first:2,second:1
+//作用于函数参数
+var inputArr = [1, 2];
+function fu(_a) {
+    var first = _a[0], second = _a[1];
+    console.log(first);
+    console.log(second);
+}
+//你可以在数组里使用...语法创建剩余变量
+var _c = [1, 2, 3, 4], fir = _c[0], last = _c.slice(1);
+console.log("fir = " + fir); //1
+console.log("last = " + last); //2,3,4
+//当然，由于是JavaScript, 你可以忽略你不关心的尾随元素：
+var firs = [1, 2, 3, 4][0];
+console.log("firs = " + firs); // 1
+//或其他元素
+var _d = [1, 2, 3, 4], sec = _d[1], fourth = _d[3];
+console.log("sec = " + sec); //2
+console.log("fourth = " + fourth); //4
+/*
+let [, sec, fourth] = [1, 2, 3, 4];
+console.log(`sec = ${sec}`) //2
+console.log(`fourth = ${fourth}`) //3
+*/
+//对象解构
+var obj = {
+    a: "foo",
+    b: 12,
+    c: "bar"
+};
+var a = obj.a, b = obj.b;
+console.log("a = " + a + ",b = " + b); //a = foo,b = 12
+//这通过 o.a and o.b 创建了 a 和 b 。 注意，如果你不需要 c 你可以忽略它。
+//就像数组解构，你可以用没有声明的赋值：
+(_b = { a: "baz", b: 101 }, a = _b.a, b = _b.b);
+console.log("a = " + a + ",b = " + b); //a = baz, b = 101
+//你可以在对象里使用...语法创建剩余变量：
+var c = obj.c, balabala = __rest(obj, ["c"]);
+var total = balabala.a + balabala.b;
+console.log("total = " + total); //foo12
+//属性重命名
+var newName1 = obj.a, newName2 = obj.b;
+console.log("newName1 = " + newName1 + " , newName2 = " + newName2); //newName1 = foo,newName2 = 12
+//你可以将 a: newName1 读做 "a 作为 newName1"
+//let newName1 = o.a;
+//let newName2 = o.b;
+//默认值
+function keepWholeObject(wholeObject) {
+    var a = wholeObject.a, _a = wholeObject.b, b = _a === void 0 ? 1001 : _a;
+}
+//函数声明
+// typc C = {a:string,b?number};
+// function f({ a, b }: C): void {
+//     // ...
+// }
+//展开
+//展开数组
+var numberOne = [1, 2];
+var secondOne = [3, 4];
+var bothPlus = [0].concat(numberOne, secondOne, [5]);
+console.log("bothPlus = " + bothPlus); //[0,1,2,3,4,5]
+//展开对象
+var defaults = {
+    food: 'spicy',
+    price: '$$',
+    ambiance: 'noisy'
+};
+var search = __assign({}, defaults, { food: "rich" });
+console.log("search = " + JSON.stringify(search));

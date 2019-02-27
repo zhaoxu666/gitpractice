@@ -246,3 +246,92 @@ let input = [1,2];
 let [first,second] = input;
 console.log(first); //1
 console.log(second);//2
+
+//这创建了2个命名变量 first 和 second。 相当于使用了索引，但更为方便：
+first = input[0];
+second = input[1];
+
+//解构作用于已声明的变量会更好：
+[first,second] = [second,first];
+console.log(`first : ${first},second : ${second}`);  //first:2,second:1
+
+//作用于函数参数
+let inputArr = [1,2]
+function fu([first, second]: [number, number]) {
+    console.log(first);
+    console.log(second);
+}
+
+//你可以在数组里使用...语法创建剩余变量
+let [fir,...last] = [1,2,3,4];
+console.log(`fir = ${fir}`); //1
+console.log(`last = ${last}`);//2,3,4
+
+//当然，由于是JavaScript, 你可以忽略你不关心的尾随元素：
+let [firs] = [1,2,3,4];
+console.log(`firs = ${firs}`); // 1
+
+//或其他元素
+let [, sec,  ,fourth] = [1, 2, 3, 4];
+console.log(`sec = ${sec}`) //2
+console.log(`fourth = ${fourth}`) //4
+
+/*
+let [, sec, fourth] = [1, 2, 3, 4];
+console.log(`sec = ${sec}`) //2
+console.log(`fourth = ${fourth}`) //3
+*/
+
+
+//对象解构
+let obj = {
+    a:"foo",
+    b:12,
+    c:"bar"
+};
+let {a, b} = obj;
+console.log(`a = ${a},b = ${b}`); //a = foo,b = 12
+//这通过 o.a and o.b 创建了 a 和 b 。 注意，如果你不需要 c 你可以忽略它。
+
+//就像数组解构，你可以用没有声明的赋值：
+({a,b} = {a:"baz",b:101});
+console.log(`a = ${a},b = ${b}`); //a = baz, b = 101
+
+//你可以在对象里使用...语法创建剩余变量：
+let {c,...balabala} = obj;
+let total = balabala.a + balabala.b;
+console.log(`total = ${total}`) //foo12
+
+//属性重命名
+let {a:newName1,b:newName2} = obj;
+console.log(`newName1 = ${newName1} , newName2 = ${newName2}`); //newName1 = foo,newName2 = 12
+//你可以将 a: newName1 读做 "a 作为 newName1"
+//let newName1 = o.a;
+//let newName2 = o.b;
+
+//默认值
+function keepWholeObject(wholeObject: { a: string, b?: number }){
+    let {a,b = 1001} = wholeObject;
+}
+
+//函数声明
+// typc C = {a:string,b?number};
+// function f({ a, b }: C): void {
+//     // ...
+// }
+
+//展开
+//展开数组
+let numberOne = [1,2];
+let secondOne = [3,4];
+let bothPlus = [0,...numberOne,...secondOne,5];
+console.log(`bothPlus = ${bothPlus}`);//[0,1,2,3,4,5]
+
+//展开对象
+let defaults = {
+    food:'spicy',
+    price:'$$',
+    ambiance:'noisy'
+};
+let search = {...defaults,food:"rich"};
+console.log(`search = ${JSON.stringify(search)}`);
